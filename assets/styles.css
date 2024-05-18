@@ -1,0 +1,44 @@
+:root {
+  --light: #ffffff;
+  --mid: #aeaeae;
+  --dark: #191919;
+  --color-01: #6991e3;
+  --color-02: #465ab8;
+  --color-03: #261360;
+  --color-04: #323d4f;
+}
+
+/* text styles */
+h1 {
+  font-size: 240%;
+}
+
+h2 {
+  font-size: 200%;
+}
+
+h3 {
+  font-size: 160%;
+}
+
+h4 {
+  font-size: 130%;
+}
+
+h1, h2, h3, h4 {
+  font-weight: bold;
+}
+
+p, h1, h2, h3, h4 {
+  margin: 16px 0px;
+}
+
+/* general styles */
+body {
+  background-color: var(--light);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: var(--dark);
+  line-height: 1;
+}
+
