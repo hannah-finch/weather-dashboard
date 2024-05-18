@@ -120,7 +120,7 @@ input {
 }
 
 /* today section */
-.today-container {
+#today-container {
   border: 1px solid var(--dark);
   border-radius: 2px;
   padding: 0 10px;
