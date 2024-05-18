@@ -77,8 +77,8 @@ header {
 
 /* aside styles */
 aside {
-  max-width: 300px;
   margin: 0 10px;
+  flex: 0 1 300px;
 }
 
 .line-horizontal {
@@ -95,6 +95,7 @@ button {
   border: none;
   border-radius: 4px;
   background-color: var(--mid-light);
+  box-shadow: 0 0 2px var(--shadow-color);
 }
 
 button:hover {
@@ -136,5 +137,20 @@ input {
 
 /* 5 day forecast section */
 .forecast-container {
-  margin: 10px;
+  margin: 24px 10px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  background-color: var(--color-04);
+  color: white;
+  width: 16%;
+  box-shadow: 0 0 2px var(--shadow-color);
+  border-radius: 2px;
+  padding: 0 10px;
+
 }
