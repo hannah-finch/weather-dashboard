@@ -1,17 +1,19 @@
 :root {
   --light: #ffffff;
-  --mid: #aeaeae;
+  --mid-light: #cfcfcf;
+  --mid-dark: #bcbcbc;
   --dark: #191919;
   --color-01: #6991e3;
   --color-02: #465ab8;
   --color-03: #261360;
   --color-04: #323d4f;
+  --shadow-color: #00000062;
 }
 
 /* text styles */
 h1 {
   font-size: 240%;
-  text-shadow: 0 0 5px #0000008d;
+  text-shadow: 0 0 5px var(--shadow-color);
 }
 
 h2 {
@@ -43,8 +45,13 @@ body {
   line-height: 1;
 }
 
+main {
+  display: flex;
+  margin: 0 5%;
+}
+
 .shadow {
-  box-shadow: 0 0 5px #aeaeae;
+  box-shadow: 0 0 5px var(--shadow-color);
 }
 
 /* header styles */
@@ -53,5 +60,48 @@ header {
   justify-content: center;
   background-image: linear-gradient(to right, var(--color-02), var(--color-03));
   color: var(--light);
+  padding: 8px;
+}
+
+/* aside styles */
+aside {
+  max-width: 300px;
+  margin: 0 20px;
+}
+
+.line-horizontal {
+  height: 2px;
+  width: 100%;
+  background-color: var(--mid-dark);
+  margin: 20px 0;
+}
+
+button {
+  width: 100%;
   padding: 10px;
+  margin: 4px 0;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--mid-light);
+}
+
+button:hover {
+  background-color: var(--mid-dark)
+}
+
+#search-button {
+  background-color: var(--color-01);
+  color: var(--light);
+}
+
+#search-button:hover {
+  background-color: var(--color-02)
+}
+
+input {
+  padding: 8px;
+  border: 1px solid var(--mid-dark);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  width: calc(100% - 18px);
 }
