@@ -17,11 +17,11 @@ h1 {
 }
 
 h2 {
-  font-size: 200%;
+  font-size: 180%;
 }
 
 h3 {
-  font-size: 160%;
+  font-size: 150%;
 }
 
 h4 {
@@ -78,7 +78,7 @@ header {
 /* aside styles */
 aside {
   margin: 0 10px;
-  flex: 0 1 300px;
+  flex: 0 2 360px;
 }
 
 .line-horizontal {
@@ -142,15 +142,44 @@ input {
 
 .cards-container {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+
 }
 
 .card {
   background-color: var(--color-04);
   color: white;
-  width: 16%;
   box-shadow: 0 0 2px var(--shadow-color);
   border-radius: 2px;
   padding: 0 10px;
+  margin: 2px;
+  flex: 1 0 120px;
+}
 
+/* media queries for responsiveness */
+@media screen and (max-width: 1070px) {
+  main {
+    flex-direction: column;
+  }
+
+  aside {
+    flex-direction: row;
+    flex: auto;
+    margin-bottom: 20px;
+  }
+
+  button {
+    width: auto;
+    padding: 10px 20px;
+  }
+
+  #search-button {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .card {
+    flex: 0 0 120px;
+  }
 }
