@@ -129,6 +129,7 @@ input {
 
 .today-header {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .today-header h2 {
@@ -141,9 +142,9 @@ input {
 }
 
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: auto auto auto auto auto;
 }
 
 .card {
@@ -153,7 +154,6 @@ input {
   border-radius: 2px;
   padding: 0 10px;
   margin: 2px;
-  flex: 1 0 120px;
 }
 
 /* media queries for responsiveness */
@@ -178,8 +178,14 @@ input {
   }
 }
 
-@media screen and (max-width: 830px) {
-  .card {
-    flex: 0 0 120px;
+@media screen and (max-width: 870px) {
+  .cards-container {
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .cards-container {
+    grid-template-columns: auto auto;
   }
 }
