@@ -19,3 +19,10 @@ Basic plan, to be adjusted along the way as I run into to issues obvs:
     - check out data array in the console to know what to put
     - the date is gonna be a timestamp, I'll have to convert... dayjs
 */
+
+const searchButton = document.getElementById('search-button');
+searchButton.addEventListener('click', fetchWeather);
+
+function fetchWeather() {
+  console.log('clicked');
+}
