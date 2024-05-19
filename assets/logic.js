@@ -45,7 +45,34 @@ function fetchWeather() {
     .then (function (data) {
       let city = (data.city.name);
       console.log(city);
-      for (let i = 0; i < 6; i++) {
+      // extract current weather first
+      let currentWeather = {
+        timestamp : (data.list[0].dt),
+        icon : (data.list[0].weather[0].icon),
+        temp: (data.list[0].main.temp),
+        wind : (data.list[0].wind.speed),
+        humidity : (data.list[0].main.humidity),
+      }
+      console.log(currentWeather);
+
+      // print current weather to the page
+      const cityNameEl = document.getElementById('city-name');
+      const currentDateEl = document.getElementById('date-today');
+      const currentIconEl = document.getElementById('icon-today');
+      const currentTempEl = document.getElementById('temp-today');
+      const currentWindEl = document.getElementById('wind-today');
+      const currentHumidityEl = document.getElementById('humidity-today');
+
+      cityNameEl.textContent = city;
+      currentDateEl.textContent = currentWeather.timestamp; // change timestamp to a date
+      currentIconEl.src = currentWeather.icon; //this is obviously not going to work, worry about it later
+      currentTempEl.textContent = `Temp: ${currentWeather.temp}°F`;
+      currentWindEl.textContent = `Wind: ${currentWeather.wind} MPH`;
+      currentHumidityEl.textContent = `Humidity: ${currentWeather.humidity}%`;
+
+
+
+      for (let i = 1; i < 6; i++) {
         let weather = {
           timestamp : (data.list[i].dt),
           icon : (data.list[i].weather[0].icon),
