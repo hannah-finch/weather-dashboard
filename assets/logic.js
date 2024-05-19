@@ -1,33 +1,20 @@
 /*
-Basic plan, to be adjusted along the way as I run into to issues obvs:
-
-- Get API key
-- on page load, add click listener to search button and city buttons
-- get location... it's gonna have to convert from city to latitude and longitude, don't know how yet... read documentation
-  - do a console.log to see if I can convert it right before passing the data
-- fetch the weather
-  - get location value
-  - variables for key, units, url (API) with parameters in it.
-    - lat and lon??? Still not sure how the conversion will work. key, units
-    - put in template string so I can insert variables right in it
-    - fetch(url) then response, conditional if there's an error?
-    - pass the data to a show weather function
-- show the weather
-  - good place for a console.log check to see if I got data
-  - create the card elements inside JavaScript with template literals... the current weather will be in different card at top, just insert info to that div
-    - make variables for the data (city, date, icon, temp, wind, humidity)
-    - check out data array in the console to know what to put
-    - the date is gonna be a timestamp, I'll have to convert... dayjs
+Left to do:
+- write function to get location and pass to fetch weather function.
+- add event listeners to all the location buttons that pass set location info to fetch weather function
+- convert timestamps to date... dayjs? I think I have to *1000 because the timestamp from OpenWeather is seconds and normal dayjs timestamps are milliseconds
 */
 
+// add event listener to buttons
 const searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', fetchWeather);
 
 function fetchWeather() {
-  console.log('clicked');
+  // remove any existing forecast cards so new cards can append
+  cardsContainer.innerHTML = "";
 
   let cityInput = document.getElementById('city-input').value;
-  // TODO: convert city to lat and lon - I saw there is an easy way to do this with OpenWeather geo thing
+  // TODO: convert city to lat and lon - I saw there is an easy way to do this with OpenWeather geo thing... actually get and convert location in function outside of this fetch function and pass data into it
 
   let key = "2f93013543aedabf89d7193f3daf51f3";
   let units = "imperial";
@@ -50,9 +37,10 @@ function fetchWeather() {
       forecastHeader.textContent = '5-day Forecast';
       forecastContainer.prepend(forecastHeader);
 
+      // get city name from data
       let city = (data.city.name);
-      console.log(city);
-      // extract current weather first
+
+      // extract the current weather first
       let currentWeather = {
         timestamp : (data.list[0].dt),
         icon : (data.list[0].weather[0].icon),
@@ -60,8 +48,8 @@ function fetchWeather() {
         wind : (data.list[0].wind.speed),
         humidity : (data.list[0].main.humidity),
       }
-      console.log(currentWeather);
 
+      // get and create elements for current weather card
       const todayContainer = document.getElementById('today-container');
       const cardsContainer = document.getElementById('cards-container');
       const todayCard = document.createElement('div');
@@ -73,19 +61,7 @@ function fetchWeather() {
       const currentWindEl = document.createElement('p');
       const currentHumidityEl = document.createElement('p');
 
-
-
-
-      // rewrite this section to create not get
-
-      // const cityNameEl = document.getElementById('city-name');
-      // const currentDateEl = document.getElementById('date-today');
-      // const currentIconEl = document.getElementById('icon-today');
-      // const currentTempEl = document.getElementById('temp-today');
-      // const currentWindEl = document.getElementById('wind-today');
-      // const currentHumidityEl = document.getElementById('humidity-today');
-      // const cardsContainer = document.getElementById('cards-container');
-
+      // set content of current weather card
       cityNameEl.textContent = city;
       currentDateEl.textContent = currentWeather.timestamp; // change timestamp to a date
       currentIconEl.src = currentWeather.icon; //this is obviously not going to work, worry about it later
@@ -93,21 +69,15 @@ function fetchWeather() {
       currentWindEl.textContent = `Wind: ${currentWeather.wind} MPH`;
       currentHumidityEl.textContent = `Humidity: ${currentWeather.humidity}%`;
 
-      // remove any cards when a new search is done
-      cardsContainer.innerHTML = "";
-
+      // add classes to current weather card
       todayHeader.classList.add('today-header');
       todayCard.classList.add('today-card');
       currentIconEl.classList.add('icon');
 
+      // append elements of current weather card
       todayHeader.append(cityNameEl, currentDateEl, currentIconEl);
       todayCard.append(todayHeader, currentTempEl, currentWindEl, currentHumidityEl);
       todayContainer.append(todayCard);
-
-
-
-
-
 
       // iterate through data to get weather info
       for (let i = 1; i < 6; i++) {
@@ -118,7 +88,6 @@ function fetchWeather() {
           wind : (data.list[i].wind.speed),
           humidity : (data.list[i].main.humidity),
         }
-        console.log(weather);
 
         // create forecast cards
         let forecastCard = document.createElement('div');
