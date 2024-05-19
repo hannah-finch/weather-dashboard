@@ -121,6 +121,10 @@ input {
 
 /* today section */
 #today-container {
+  width: 100%;
+}
+
+.today-card {
   border: 1px solid var(--dark);
   border-radius: 2px;
   padding: 0 10px;
@@ -137,7 +141,7 @@ input {
 }
 
 /* 5 day forecast section */
-.forecast-container {
+#forecast-container {
   margin: 24px 10px;
 }
 

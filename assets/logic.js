@@ -43,6 +43,13 @@ function fetchWeather() {
     })
     // pass the data to this function
     .then (function (data) {
+      // create forecast header
+      const forecastContainer = document.getElementById('forecast-container');
+      const forecastHeader = document.createElement('h3');
+      // print forecast header
+      forecastHeader.textContent = '5-day Forecast';
+      forecastContainer.prepend(forecastHeader);
+
       let city = (data.city.name);
       console.log(city);
       // extract current weather first
@@ -55,13 +62,29 @@ function fetchWeather() {
       }
       console.log(currentWeather);
 
-      // print current weather to the page
-      const cityNameEl = document.getElementById('city-name');
-      const currentDateEl = document.getElementById('date-today');
-      const currentIconEl = document.getElementById('icon-today');
-      const currentTempEl = document.getElementById('temp-today');
-      const currentWindEl = document.getElementById('wind-today');
-      const currentHumidityEl = document.getElementById('humidity-today');
+      const todayContainer = document.getElementById('today-container');
+      const cardsContainer = document.getElementById('cards-container');
+      const todayCard = document.createElement('div');
+      const todayHeader = document.createElement('div');
+      const cityNameEl = document.createElement('h2');
+      const currentDateEl = document.createElement('h2');
+      const currentIconEl = document.createElement('img');
+      const currentTempEl = document.createElement('p');
+      const currentWindEl = document.createElement('p');
+      const currentHumidityEl = document.createElement('p');
+
+
+
+
+      // rewrite this section to create not get
+
+      // const cityNameEl = document.getElementById('city-name');
+      // const currentDateEl = document.getElementById('date-today');
+      // const currentIconEl = document.getElementById('icon-today');
+      // const currentTempEl = document.getElementById('temp-today');
+      // const currentWindEl = document.getElementById('wind-today');
+      // const currentHumidityEl = document.getElementById('humidity-today');
+      // const cardsContainer = document.getElementById('cards-container');
 
       cityNameEl.textContent = city;
       currentDateEl.textContent = currentWeather.timestamp; // change timestamp to a date
@@ -70,7 +93,23 @@ function fetchWeather() {
       currentWindEl.textContent = `Wind: ${currentWeather.wind} MPH`;
       currentHumidityEl.textContent = `Humidity: ${currentWeather.humidity}%`;
 
-      // iterate through data to create forecast cards
+      // remove any cards when a new search is done
+      cardsContainer.innerHTML = "";
+
+      todayHeader.classList.add('today-header');
+      todayCard.classList.add('today-card');
+      currentIconEl.classList.add('icon');
+
+      todayHeader.append(cityNameEl, currentDateEl, currentIconEl);
+      todayCard.append(todayHeader, currentTempEl, currentWindEl, currentHumidityEl);
+      todayContainer.append(todayCard);
+
+
+
+
+
+
+      // iterate through data to get weather info
       for (let i = 1; i < 6; i++) {
         let weather = {
           timestamp : (data.list[i].dt),
@@ -81,6 +120,7 @@ function fetchWeather() {
         }
         console.log(weather);
 
+        // create forecast cards
         let forecastCard = document.createElement('div');
         let forecastDate = document.createElement('h4');
         let forecastIcon = document.createElement('img');
@@ -88,17 +128,20 @@ function fetchWeather() {
         let forecastWind = document.createElement('p');
         let forecastHumidity = document.createElement('p');
 
+        // assign classes to card
         forecastCard.classList.add('card');
         forecastIcon.classList.add('icon');
 
+        // put weather data on card
         forecastDate.textContent = weather.timestamp; //change to date later
         forecastTemp.textContent = `Temp: ${weather.temp}°F`;
         forecastWind.textContent = `Wind: ${weather.wind} MPH`;
         forecastHumidity.textContent = `Humidity: ${weather.humidity}%`;
 
+        // append elements to card
         forecastCard.append(forecastDate, forecastIcon, forecastTemp, forecastWind, forecastHumidity);
 
-        const cardsContainer = document.getElementById('cards-container');
+        // print cards to page
         cardsContainer.append(forecastCard);
       }
     });
