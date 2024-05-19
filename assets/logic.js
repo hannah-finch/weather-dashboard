@@ -41,44 +41,41 @@ function fetchWeather() {
     .then(response => {
       return response.json();
     })
-    // TODO: pass the data to the showWeather function
-    .then ((data) => {
-      showWeather(data);
+    // pass the data to this function
+    .then (function (data) {
+      let city = (data.city.name);
+      console.log(city);
+      for (let i = 0; i < 6; i++) {
+        let weather = {
+          timestamp : (data.list[i].dt),
+          icon : (data.list[i].weather[0].icon),
+          temp: (data.list[i].main.temp),
+          wind : (data.list[i].wind.speed),
+          humidity : (data.list[i].main.humidity),
+        }
+        console.log(weather);
+      }
     })
 }
 
 // My brain is currently exhausted, but I think something like this should go in a for loop. Maybe I can append it in a separate function so I don't have to separate the current data from the forecast data. I'm sure there's a better way to do this, I'm just tired.
-function showWeather(response) {
-  console.log(response)
-  // construct card for current weather
-  // HTML container for current weather card
-  const currentContainer = document.getElementById('today-container');
-  // card for current weather
-  const currentCard = document.createElement("div");
-  // container for city name, date, icon
-  const currentHeader = document.createElement("div");
-  const cityNameEl = document.createElement("h2");
-  const currentDateEl = document.createElement("h2");
-  const currentIconEl = document.createElement("img");
-  const currentTempEl = document.createElement("p");
-  const currentWindEl = document.createElement("p");
-  const currentHumidityEl = document.createElement("p");
+// wait, I don't have to create it I just have to get it... Or maybe I should create a card for the 5-day forecast, but just get for the current?
+// function showWeather(response) {
+//   console.log(response)
 
-  // add classes
-  currentHeader.classList.add("today-header");
-  currentIconEl.classList.add("icon-today");
+//   const cityNameEl = document.getElementById('city-name');
+//   const currentDateEl = document.getElementById('date-today');
+//   const currentIconEl = document.getElementById('icon-today');
+//   const currentTempEl = document.getElementById('temp-today');
+//   const currentWindEl = document.getElementById('wind-today');
+//   const currentHumidityEl = document.getElementById('humidity-today');
 
-  // add content
-  // I put in filler info for now. Icon source isn't working
-  cityNameEl.textContent = "City Name";
-  currentDateEl.textContent = "(9/13/2022)";
-  currentIconEl.src = "./images/filler-icon.png";
-  currentTempEl.textContent = "Temp: 76.62";
-  currentWindEl.textContent = "Wind: 8.43";
-  currentHumidityEl.textContent ="Humidity: 44%";
+//   cityNameEl.textContent = "City Name";
+//   currentDateEl.textContent = "(9/13/2022)";
+//   currentIconEl.src = "../images/filler-icon.png";
+//   currentTempEl.textContent = "Temp: 76.62";
+//   currentWindEl.textContent = "Wind: 8.43";
+//   currentHumidityEl.textContent ="Humidity: 44%";
 
-  currentHeader.append(cityNameEl, currentDateEl, currentIconEl);
-  currentCard.append(currentHeader, currentTempEl, currentWindEl, currentHumidityEl);
-  currentContainer.append(currentCard);
 
-}
+// }
