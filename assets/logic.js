@@ -9,18 +9,18 @@ Left to do:
 const searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', fetchWeather);
 
-function fetchWeather() {
-  // remove any existing forecast cards so new cards can append
-  cardsContainer.innerHTML = "";
+// I just put in an example lat and lon for now
+let lat = "51.5073219";
+let lon = "-0.1276474";
 
+function getLocation() {
   let cityInput = document.getElementById('city-input').value;
-  // TODO: convert city to lat and lon - I saw there is an easy way to do this with OpenWeather geo thing... actually get and convert location in function outside of this fetch function and pass data into it
+  // TODO: convert city to lat and lon - I saw there is an easy way to do this with OpenWeather geo thing... pass data into fetchWeather function
+}
 
+function fetchWeather() {
   let key = "2f93013543aedabf89d7193f3daf51f3";
   let units = "imperial";
-  // I just put in an example lat and lon for now
-  let lat = "51.5073219";
-  let lon = "-0.1276474";
   let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${units}`;
 
   fetch(url)
@@ -30,12 +30,9 @@ function fetchWeather() {
     })
     // pass the data to this function
     .then (function (data) {
-      // create forecast header
-      const forecastContainer = document.getElementById('forecast-container');
-      const forecastHeader = document.createElement('h3');
-      // print forecast header
+      // get forecast header and add text
+      const forecastHeader = document.getElementById('forecast-header');
       forecastHeader.textContent = '5-day Forecast';
-      forecastContainer.prepend(forecastHeader);
 
       // get city name from data
       let city = (data.city.name);
@@ -60,6 +57,10 @@ function fetchWeather() {
       const currentTempEl = document.createElement('p');
       const currentWindEl = document.createElement('p');
       const currentHumidityEl = document.createElement('p');
+
+      // remove any existing cards so new cards can replace them
+      cardsContainer.innerHTML = "";
+      todayContainer.innerHTML = "";
 
       // set content of current weather card
       cityNameEl.textContent = city;
@@ -90,12 +91,12 @@ function fetchWeather() {
         }
 
         // create forecast cards
-        let forecastCard = document.createElement('div');
-        let forecastDate = document.createElement('h4');
-        let forecastIcon = document.createElement('img');
-        let forecastTemp = document.createElement('p');
-        let forecastWind = document.createElement('p');
-        let forecastHumidity = document.createElement('p');
+        const forecastCard = document.createElement('div');
+        const forecastDate = document.createElement('h4');
+        const forecastIcon = document.createElement('img');
+        const forecastTemp = document.createElement('p');
+        const forecastWind = document.createElement('p');
+        const forecastHumidity = document.createElement('p');
 
         // assign classes to card
         forecastCard.classList.add('card');
