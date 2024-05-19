@@ -70,8 +70,7 @@ function fetchWeather() {
       currentWindEl.textContent = `Wind: ${currentWeather.wind} MPH`;
       currentHumidityEl.textContent = `Humidity: ${currentWeather.humidity}%`;
 
-
-
+      // iterate through data to create forecast cards
       for (let i = 1; i < 6; i++) {
         let weather = {
           timestamp : (data.list[i].dt),
@@ -81,28 +80,26 @@ function fetchWeather() {
           humidity : (data.list[i].main.humidity),
         }
         console.log(weather);
+
+        let forecastCard = document.createElement('div');
+        let forecastDate = document.createElement('h4');
+        let forecastIcon = document.createElement('img');
+        let forecastTemp = document.createElement('p');
+        let forecastWind = document.createElement('p');
+        let forecastHumidity = document.createElement('p');
+
+        forecastCard.classList.add('card');
+        forecastIcon.classList.add('icon');
+
+        forecastDate.textContent = weather.timestamp; //change to date later
+        forecastTemp.textContent = `Temp: ${weather.temp}°F`;
+        forecastWind.textContent = `Wind: ${weather.wind} MPH`;
+        forecastHumidity.textContent = `Humidity: ${weather.humidity}%`;
+
+        forecastCard.append(forecastDate, forecastIcon, forecastTemp, forecastWind, forecastHumidity);
+
+        const cardsContainer = document.getElementById('cards-container');
+        cardsContainer.append(forecastCard);
       }
-    })
+    });
 }
-
-// My brain is currently exhausted, but I think something like this should go in a for loop. Maybe I can append it in a separate function so I don't have to separate the current data from the forecast data. I'm sure there's a better way to do this, I'm just tired.
-// wait, I don't have to create it I just have to get it... Or maybe I should create a card for the 5-day forecast, but just get for the current?
-// function showWeather(response) {
-//   console.log(response)
-
-//   const cityNameEl = document.getElementById('city-name');
-//   const currentDateEl = document.getElementById('date-today');
-//   const currentIconEl = document.getElementById('icon-today');
-//   const currentTempEl = document.getElementById('temp-today');
-//   const currentWindEl = document.getElementById('wind-today');
-//   const currentHumidityEl = document.getElementById('humidity-today');
-
-//   cityNameEl.textContent = "City Name";
-//   currentDateEl.textContent = "(9/13/2022)";
-//   currentIconEl.src = "../images/filler-icon.png";
-//   currentTempEl.textContent = "Temp: 76.62";
-//   currentWindEl.textContent = "Wind: 8.43";
-//   currentHumidityEl.textContent ="Humidity: 44%";
-
-
-// }
