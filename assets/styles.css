@@ -183,13 +183,13 @@ input {
 }
 
 @media screen and (max-width: 870px) {
-  .cards-container {
+  #cards-container {
     grid-template-columns: auto auto auto;
   }
 }
 
 @media screen and (max-width: 520px) {
-  .cards-container {
+  #cards-container {
     grid-template-columns: auto auto;
   }
 }

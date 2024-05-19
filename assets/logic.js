@@ -7,18 +7,83 @@ Left to do:
 
 // add event listener to buttons
 const searchButton = document.getElementById('search-button');
-searchButton.addEventListener('click', fetchWeather);
+searchButton.addEventListener('click', getLocation);
+
+// set lat and lon for each city button and pass the info to the fetchWeather function
+const btnAtlanta = document.getElementById('atlanta')
+btnAtlanta.addEventListener('click', function() {
+  let lat = "33.7488";
+  let lon = "-84.3877";
+  fetchWeather(lat, lon)
+})
+
+const btnDenver = document.getElementById('denver')
+btnDenver.addEventListener('click', function() {
+  let lat = "39.7392";
+  let lon = "-104.9903";
+  fetchWeather(lat, lon)
+})
+
+const btnSeattle = document.getElementById('seattle')
+btnSeattle.addEventListener('click', function() {
+  let lat = "47.6061";
+  let lon = "-122.3328";
+  fetchWeather(lat, lon)
+})
+
+const btnSanFrancisco = document.getElementById('san-francisco')
+btnSanFrancisco.addEventListener('click', function() {
+  let lat = "37.7749";
+  let lon = "-122.4194";
+  fetchWeather(lat, lon)
+})
+
+const btnOrlando = document.getElementById('orlando')
+btnOrlando.addEventListener('click', function() {
+  let lat = "28.5384";
+  let lon = "-81.3789";
+  fetchWeather(lat, lon)
+})
+
+const btnNewYork = document.getElementById('new-york')
+btnNewYork.addEventListener('click', function() {
+  let lat = "40.7128";
+  let lon = "-74.0060";
+  fetchWeather(lat, lon)
+})
+
+const btnChicago = document.getElementById('chicago')
+btnChicago.addEventListener('click', function() {
+  let lat = "41.8781";
+  let lon = "-87.6298";
+  fetchWeather(lat, lon)
+})
+
+const btnAustin = document.getElementById('austin')
+btnAustin.addEventListener('click', function() {
+  let lat = "30.2672";
+  let lon = "-97.7431";
+  fetchWeather(lat, lon)
+})
 
 // I just put in an example lat and lon for now
-let lat = "51.5073219";
-let lon = "-0.1276474";
+// let lat = "51.5073219";
+// let lon = "-0.1276474";
 
 function getLocation() {
   let cityInput = document.getElementById('city-input').value;
   // TODO: convert city to lat and lon - I saw there is an easy way to do this with OpenWeather geo thing... pass data into fetchWeather function
+
+
+
+
+  let lat = "51.5073219";
+  let lon = "-0.1276474";
+  // pass lat and lon to fetchWeather function
+  fetchWeather(lat, lon);
 }
 
-function fetchWeather() {
+function fetchWeather(lat, lon) {
   let key = "2f93013543aedabf89d7193f3daf51f3";
   let units = "imperial";
   let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${units}`;
