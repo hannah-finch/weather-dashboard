@@ -1,7 +1,6 @@
 /*
 Left to do:
 - convert timestamps to date... dayjs? I think I have to *1000 because the timestamp from OpenWeather is seconds and normal dayjs timestamps are milliseconds
-- get the icons
 
 Improvement ideas:
 - add conditional if city input is blank, return
@@ -19,10 +18,9 @@ const cityButtonContainer = document.getElementById('city-button-container');
 
 function getButtons() {
   cityArray.forEach((cityName) => {
-    console.log(cityName);
     const cityButton = document.createElement('button');
     cityButton.textContent = cityName;
-    cityButtonContainer.prepend(cityButton);
+    cityButtonContainer.append(cityButton);
   })
 }
 
@@ -36,10 +34,10 @@ searchButton.addEventListener('click', function(event){
   event.preventDefault();
   let cityInput = document.getElementById('city-input').value;
 
-  // put city into cityArray and save in storage
-  cityArray.push(cityInput);
-  localStorage.setItem('cityArray', JSON.stringify(cityArray));
-  console.log(cityArray);
+  // // put city into cityArray and save in storage
+  // cityArray.unshift(cityInput);
+  // localStorage.setItem('cityArray', JSON.stringify(cityArray));
+  // console.log(cityArray);
 
   // now make new button
   const cityButton = document.createElement('button');
@@ -50,19 +48,28 @@ searchButton.addEventListener('click', function(event){
   getLatLon(cityInput);
 });
 
+// if value of a = value of b, delete b
+
 // use delegation to add event listeners to the history buttons
 cityButtonContainer.addEventListener('click', (event) => {
   const cityBtn = event.target;
   // set cityInput to the text on the button
   let cityInput = cityBtn.innerText;
-  console.log(cityInput);
+  // move button to top of button container
+  cityButtonContainer.prepend(cityBtn);
   // send to getLatLon function
   getLatLon(cityInput)
 });
 
 // function to convert city input value to latitude and longitude via open weather map geo API and pass to fetchWeather function
 function getLatLon(cityInput) {
-  // cityInput = document.getElementById('city-input').value;
+    // put city into cityArray and save in storage
+    cityArray.unshift(cityInput);
+    // delete duplicate cities from array (set only allows unique values);
+    cityArray = [...new Set(cityArray)];
+    localStorage.setItem('cityArray', JSON.stringify(cityArray));
+
+  // use open weather map geo api to convert city to latitude and longitude
   let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},&appid=${key}`;
 
   fetch(url)
