@@ -23,7 +23,7 @@ I just realized the buttons on the side are supposed to be from search history, 
 */
 
 const key = "2f93013543aedabf89d7193f3daf51f3";
-let cityArray = JSON.parse(localStorage.getItem('cityArray')) || ['test city', 'another test city'];
+let cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
 const cityButtonContainer = document.getElementById('city-button-container');
 
 function getButtons() {
@@ -41,8 +41,8 @@ if (cityArray != []) {
 
 
 // function to convert city input value to latitude and longitude via open weather map geo API and pass to fetchWeather function
-function getLatLon() {
-  let cityInput = document.getElementById('city-input').value;
+function getLatLon(cityInput) {
+  // cityInput = document.getElementById('city-input').value;
   let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},&appid=${key}`;
 
   fetch(url)
@@ -61,64 +61,80 @@ function getLatLon() {
 
 // add event listener to search button
 const searchButton = document.getElementById('search-button');
-searchButton.addEventListener('click', getLatLon);
+searchButton.addEventListener('click', function(event){
+  event.preventDefault();
+  let cityInput = document.getElementById('city-input').value;
 
-// add event listeners to city buttons, set lat and lon for each, pass the info to the fetchWeather function
-const btnAtlanta = document.getElementById('atlanta')
-btnAtlanta.addEventListener('click', function() {
-  let lat = "33.7488";
-  let lon = "-84.3877";
-  fetchWeather(lat, lon);
-})
+  // put city into cityArray and save in storage
+  cityArray.push(cityInput);
+  localStorage.setItem('cityArray', JSON.stringify(cityArray));
+  console.log(cityArray);
 
-const btnDenver = document.getElementById('denver')
-btnDenver.addEventListener('click', function() {
-  let lat = "39.7392";
-  let lon = "-104.9903";
-  fetchWeather(lat, lon);
-})
+  // now make new button
+  const cityButton = document.createElement('button');
+  cityButton.textContent = cityInput;
+  cityButtonContainer.prepend(cityButton);
 
-const btnSeattle = document.getElementById('seattle')
-btnSeattle.addEventListener('click', function() {
-  let lat = "47.6061";
-  let lon = "-122.3328";
-  fetchWeather(lat, lon);
-})
+  //send to getLatLon function
+  getLatLon(cityInput)
+});
 
-const btnSanFrancisco = document.getElementById('san-francisco')
-btnSanFrancisco.addEventListener('click', function() {
-  let lat = "37.7749";
-  let lon = "-122.4194";
-  fetchWeather(lat, lon);
-})
+// // add event listeners to city buttons, set lat and lon for each, pass the info to the fetchWeather function
+// const btnAtlanta = document.getElementById('atlanta')
+// btnAtlanta.addEventListener('click', function() {
+//   let lat = "33.7488";
+//   let lon = "-84.3877";
+//   fetchWeather(lat, lon);
+// })
 
-const btnOrlando = document.getElementById('orlando')
-btnOrlando.addEventListener('click', function() {
-  let lat = "28.5384";
-  let lon = "-81.3789";
-  fetchWeather(lat, lon);
-})
+// const btnDenver = document.getElementById('denver')
+// btnDenver.addEventListener('click', function() {
+//   let lat = "39.7392";
+//   let lon = "-104.9903";
+//   fetchWeather(lat, lon);
+// })
 
-const btnNewYork = document.getElementById('new-york')
-btnNewYork.addEventListener('click', function() {
-  let lat = "40.7128";
-  let lon = "-74.0060";
-  fetchWeather(lat, lon);
-})
+// const btnSeattle = document.getElementById('seattle')
+// btnSeattle.addEventListener('click', function() {
+//   let lat = "47.6061";
+//   let lon = "-122.3328";
+//   fetchWeather(lat, lon);
+// })
 
-const btnChicago = document.getElementById('chicago')
-btnChicago.addEventListener('click', function() {
-  let lat = "41.8781";
-  let lon = "-87.6298";
-  fetchWeather(lat, lon);
-})
+// const btnSanFrancisco = document.getElementById('san-francisco')
+// btnSanFrancisco.addEventListener('click', function() {
+//   let lat = "37.7749";
+//   let lon = "-122.4194";
+//   fetchWeather(lat, lon);
+// })
 
-const btnAustin = document.getElementById('austin')
-btnAustin.addEventListener('click', function() {
-  let lat = "30.2672";
-  let lon = "-97.7431";
-  fetchWeather(lat, lon);
-})
+// const btnOrlando = document.getElementById('orlando')
+// btnOrlando.addEventListener('click', function() {
+//   let lat = "28.5384";
+//   let lon = "-81.3789";
+//   fetchWeather(lat, lon);
+// })
+
+// const btnNewYork = document.getElementById('new-york')
+// btnNewYork.addEventListener('click', function() {
+//   let lat = "40.7128";
+//   let lon = "-74.0060";
+//   fetchWeather(lat, lon);
+// })
+
+// const btnChicago = document.getElementById('chicago')
+// btnChicago.addEventListener('click', function() {
+//   let lat = "41.8781";
+//   let lon = "-87.6298";
+//   fetchWeather(lat, lon);
+// })
+
+// const btnAustin = document.getElementById('austin')
+// btnAustin.addEventListener('click', function() {
+//   let lat = "30.2672";
+//   let lon = "-97.7431";
+//   fetchWeather(lat, lon);
+// })
 
 function fetchWeather(lat, lon) {
   let key = "2f93013543aedabf89d7193f3daf51f3";
