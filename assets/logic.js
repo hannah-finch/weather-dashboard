@@ -1,6 +1,25 @@
 /*
 Left to do:
 - convert timestamps to date... dayjs? I think I have to *1000 because the timestamp from OpenWeather is seconds and normal dayjs timestamps are milliseconds
+- get the icons
+
+
+I just realized the buttons on the side are supposed to be from search history, not just set cities. SOOO that changes a lot. Make a new plan now....
+- gonna need an array of search history saved in local
+- make a getButtons function to display the buttons from history
+- when the search button is clicked:
+  - get location
+  - fetch weather
+  - create and prepend button, button text should be city name from data
+  - add the city name to local storage
+- when a button is clicked:
+  - send button text to get location
+  - fetch weather
+
+- so... change getLatLon so city variable is outside it, use city as a parameter
+- on search button click, set city to input, send to getLatLon
+- on button click, set city to button name, send to getLatLon
+- should I limit the number of buttons? if array.length > n, pop the last one off?
 */
 
 const key = "2f93013543aedabf89d7193f3daf51f3";
@@ -8,7 +27,7 @@ const key = "2f93013543aedabf89d7193f3daf51f3";
 // function to convert city input value to latitude and longitude via open weather map geo API and pass to fetchWeather function
 function getLatLon() {
   let cityInput = document.getElementById('city-input').value;
-  let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},&appid=${key}`
+  let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},&appid=${key}`;
 
   fetch(url)
     .then(response => {
