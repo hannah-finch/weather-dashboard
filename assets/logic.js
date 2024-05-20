@@ -67,6 +67,12 @@ function getLatLon(cityInput) {
     cityArray.unshift(cityInput);
     // delete duplicate cities from array (set only allows unique values);
     cityArray = [...new Set(cityArray)];
+
+    // if there are more than 8 cities in array, delete last one
+    if (cityArray.length > 8) {
+      cityArray.pop();
+    }
+
     localStorage.setItem('cityArray', JSON.stringify(cityArray));
 
   // use open weather map geo api to convert city to latitude and longitude
