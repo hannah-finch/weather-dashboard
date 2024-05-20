@@ -32,12 +32,17 @@ const searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', function(event){
   event.preventDefault();
   let cityInput = document.getElementById('city-input').value;
-  // make new button
-  const cityButton = document.createElement('button');
-  cityButton.textContent = cityInput;
-  cityButtonContainer.prepend(cityButton);
-  //send to getLatLon function
-  getLatLon(cityInput);
+  if (cityInput == "") {
+    alert("Please enter a city");
+    return;
+  } else {
+    // make new button
+    const cityButton = document.createElement('button');
+    cityButton.textContent = cityInput;
+    cityButtonContainer.prepend(cityButton);
+    //send to getLatLon function
+    getLatLon(cityInput);
+  }
 });
 
 // use delegation to add event listeners to the history buttons
@@ -166,10 +171,7 @@ function fetchWeather(lat, lon) {
       humidity : (data.list[0].main.humidity),
     }
 
-    console.log(data);
-
     createCurrentCard(currentWeather);
-
   })
 
   fetch(url2)
@@ -193,7 +195,5 @@ function fetchWeather(lat, lon) {
 
       createForecastCards(weather);
     }
-    console.log(data2);
-
   })
 }
