@@ -2,27 +2,15 @@
 Left to do:
 - convert timestamps to date... dayjs? I think I have to *1000 because the timestamp from OpenWeather is seconds and normal dayjs timestamps are milliseconds
 - get the icons
-- make buttons functional
 
+Improvement ideas:
 - add conditional if city input is blank, return
+- when a city button is clicked, move it to the top of the array and the element as well
+- when there are more than like 8 buttons, pop the last one
+- add a loading indicator when getting weather data
+- look for ways to make code more efficient and load faster
+- Add state after city name in current weather card
 
-
-I just realized the buttons on the side are supposed to be from search history, not just set cities. SOOO that changes a lot. Make a new plan now....
-- gonna need an array of search history saved in local
-- make a getButtons function to display the buttons from history
-- when the search button is clicked:
-  - get location
-  - fetch weather
-  - create and prepend button, button text should be city name from data
-  - add the city name to local storage
-- when any button is clicked:
-  - send button text to get location
-  - fetch weather
-
-- so... change getLatLon so city variable is outside it, use city as a parameter
-- on search button click, set city to input, send to getLatLon
-- on button click, set city to button name, send to getLatLon
-- should I limit the number of buttons? if array.length > n, pop the last one off?
 */
 
 const key = "2f93013543aedabf89d7193f3daf51f3";
@@ -70,7 +58,7 @@ cityButtonContainer.addEventListener('click', (event) => {
   console.log(cityInput);
   // send to getLatLon function
   getLatLon(cityInput)
-})
+});
 
 // function to convert city input value to latitude and longitude via open weather map geo API and pass to fetchWeather function
 function getLatLon(cityInput) {
@@ -92,7 +80,6 @@ function getLatLon(cityInput) {
 };
 
 function fetchWeather(lat, lon) {
-  let key = "2f93013543aedabf89d7193f3daf51f3";
   let units = "imperial";
   let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${units}`;
 
@@ -138,7 +125,7 @@ function fetchWeather(lat, lon) {
       // set content of current weather card
       cityNameEl.textContent = city;
       currentDateEl.textContent = currentWeather.timestamp; // change timestamp to a date
-      currentIconEl.src = currentWeather.icon; //this is obviously not going to work, worry about it later
+      currentIconEl.src = `http://openweathermap.org/img/w/${currentWeather.icon}.png`;
       currentTempEl.textContent = `Temp: ${currentWeather.temp}°F`;
       currentWindEl.textContent = `Wind: ${currentWeather.wind} MPH`;
       currentHumidityEl.textContent = `Humidity: ${currentWeather.humidity}%`;
@@ -177,6 +164,7 @@ function fetchWeather(lat, lon) {
 
         // put weather data on card
         forecastDate.textContent = weather.timestamp; //change to date later
+        forecastIcon.src = `http://openweathermap.org/img/w/${weather.icon}.png`;
         forecastTemp.textContent = `Temp: ${weather.temp}°F`;
         forecastWind.textContent = `Wind: ${weather.wind} MPH`;
         forecastHumidity.textContent = `Humidity: ${weather.humidity}%`;
