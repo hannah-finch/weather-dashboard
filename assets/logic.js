@@ -2,12 +2,14 @@
 Left to do:
 - convert timestamps to date... dayjs? I think I have to *1000 because the timestamp from OpenWeather is seconds and normal dayjs timestamps are milliseconds
 
+Data is currently working off every three hours, I want every 24 hours...
+day one is index 0-7
+day two is 8-15
+
 Improvement ideas:
 - add conditional if city input is blank, return
-- when a city button is clicked, move it to the top of the array and the element as well
-- when there are more than like 8 buttons, pop the last one
 - add a loading indicator when getting weather data
-- look for ways to make code more efficient and load faster
+- look for ways to make code more efficient and load faster... add limit when fetching data
 - Add state after city name in current weather card
 
 */
@@ -107,19 +109,21 @@ function fetchWeather(lat, lon) {
       const forecastHeader = document.getElementById('forecast-header');
       forecastHeader.textContent = '5-day Forecast';
 
+      console.log(data);
+
       // get city name from data
       let city = (data.city.name);
 
       // extract the current weather first
       let currentWeather = {
-        timestamp : (data.list[0].dt),
+        date : (new Date((data.list[0].dt)*1000)).toLocaleDateString(), // *1000 for milliseconds, convert format
         icon : (data.list[0].weather[0].icon),
         temp: (data.list[0].main.temp),
         wind : (data.list[0].wind.speed),
         humidity : (data.list[0].main.humidity),
       }
 
-      // get and create elements for current weather card
+            // get and create elements for current weather card
       const todayContainer = document.getElementById('today-container');
       const cardsContainer = document.getElementById('cards-container');
       const todayCard = document.createElement('div');
@@ -137,7 +141,7 @@ function fetchWeather(lat, lon) {
 
       // set content of current weather card
       cityNameEl.textContent = city;
-      currentDateEl.textContent = currentWeather.timestamp; // change timestamp to a date
+      currentDateEl.textContent = `(${currentWeather.date})`;
       currentIconEl.src = `http://openweathermap.org/img/w/${currentWeather.icon}.png`;
       currentTempEl.textContent = `Temp: ${currentWeather.temp}°F`;
       currentWindEl.textContent = `Wind: ${currentWeather.wind} MPH`;
@@ -154,9 +158,11 @@ function fetchWeather(lat, lon) {
       todayContainer.append(todayCard);
 
       // iterate through data to get weather info
-      for (let i = 1; i < 6; i++) {
+      // data is every 3 hours, I want every 24 hours, so work in multiples of 8
+      for (let i = 8; i < 48; i+=8) {
         let weather = {
-          timestamp : (data.list[i].dt),
+          // I'm getting an error in the console for the following line, cannot read dt, but it's working... dt is from the data
+          date : (new Date((data.list[i].dt)*1000)).toLocaleDateString(), // *1000 for milliseconds, convert format
           icon : (data.list[i].weather[0].icon),
           temp: (data.list[i].main.temp),
           wind : (data.list[i].wind.speed),
@@ -176,7 +182,7 @@ function fetchWeather(lat, lon) {
         forecastIcon.classList.add('icon');
 
         // put weather data on card
-        forecastDate.textContent = weather.timestamp; //change to date later
+        forecastDate.textContent = weather.date;
         forecastIcon.src = `http://openweathermap.org/img/w/${weather.icon}.png`;
         forecastTemp.textContent = `Temp: ${weather.temp}°F`;
         forecastWind.textContent = `Wind: ${weather.wind} MPH`;
