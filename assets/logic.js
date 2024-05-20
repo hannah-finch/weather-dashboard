@@ -144,7 +144,10 @@ function getLatLon(cityInput) {
 
 function fetchWeather(lat, lon) {
   let units = "imperial";
-  let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${units}`;
+  // OpenWeatherMap limits each request to 40, so split into two requests
+  let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${units}&cnt=1`;
+  let url2 = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=${units}&start=8&cnt=40`;
+  // maybe second one starts on current time stamp plus 24hrs
 
   fetch(url)
   .then(response => {
@@ -163,21 +166,34 @@ function fetchWeather(lat, lon) {
       humidity : (data.list[0].main.humidity),
     }
 
+    console.log(data);
+
     createCurrentCard(currentWeather);
 
+  })
+
+  fetch(url2)
+  .then(response => {
+    return response.json();
+  })
+
+  .then (function (data2) {
     // iterate through data to get weather info
-    // data is every 3 hours, for every 24 hours, work in multiples of 8
-    for (let i = 8; i < 48; i+=8) {
+    // data is every 3 hours, for every 24 hours work in multiples of 8
+    for (let i = 7; i < 48; i+=8) {
+
       let weather = {
         // I'm getting an error in the console for the following line, cannot read dt, but it's working... dt is from the data
-        date : (new Date((data.list[i].dt)*1000)).toLocaleDateString(), // *1000 for milliseconds, convert format
-        icon : (data.list[i].weather[0].icon),
-        temp: (data.list[i].main.temp),
-        wind : (data.list[i].wind.speed),
-        humidity : (data.list[i].main.humidity),
+        date : (new Date((data2.list[i].dt)*1000)).toLocaleDateString(), // *1000 for milliseconds, convert format
+        icon : (data2.list[i].weather[0].icon),
+        temp: (data2.list[i].main.temp),
+        wind : (data2.list[i].wind.speed),
+        humidity : (data2.list[i].main.humidity),
       }
 
       createForecastCards(weather);
     }
-  });
+    console.log(data2);
+
+  })
 }
