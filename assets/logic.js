@@ -68,7 +68,7 @@ function createCurrentCard(currentWeather) {
   // set content of current weather card
   cityNameEl.textContent = currentWeather.city;
   currentDateEl.textContent = `(${currentWeather.date})`;
-  currentIconEl.src = `http://openweathermap.org/img/w/${currentWeather.icon}.png`;
+  currentIconEl.src = `https://openweathermap.org/img/w/${currentWeather.icon}.png`;
   currentTempEl.textContent = `Temp: ${currentWeather.temp}°F`;
   currentWindEl.textContent = `Wind: ${currentWeather.wind} MPH`;
   currentHumidityEl.textContent = `Humidity: ${currentWeather.humidity}%`;
@@ -101,7 +101,7 @@ function createForecastCards(weather) {
 
   // put weather data on card
   forecastDate.textContent = weather.date;
-  forecastIcon.src = `http://openweathermap.org/img/w/${weather.icon}.png`;
+  forecastIcon.src = `https://openweathermap.org/img/w/${weather.icon}.png`;
   forecastTemp.textContent = `Temp: ${weather.temp}°F`;
   forecastWind.textContent = `Wind: ${weather.wind} MPH`;
   forecastHumidity.textContent = `Humidity: ${weather.humidity}%`;
@@ -126,7 +126,7 @@ function getLatLon(cityInput) {
   localStorage.setItem('cityArray', JSON.stringify(cityArray));
 
   // use open weather map geo api to convert city to latitude and longitude
-  let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput},&appid=${key}`;
+  let url = `https://api.openweathermap.org/geo/1.0/direct?q=${cityInput},&appid=${key}`;
 
   fetch(url)
   .then(response => {
