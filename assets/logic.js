@@ -12,7 +12,7 @@ I just realized the buttons on the side are supposed to be from search history, 
   - fetch weather
   - create and prepend button, button text should be city name from data
   - add the city name to local storage
-- when a button is clicked:
+- when any button is clicked:
   - send button text to get location
   - fetch weather
 
@@ -23,6 +23,22 @@ I just realized the buttons on the side are supposed to be from search history, 
 */
 
 const key = "2f93013543aedabf89d7193f3daf51f3";
+let cityArray = JSON.parse(localStorage.getItem('cityArray')) || ['test city', 'another test city'];
+const cityButtonContainer = document.getElementById('city-button-container');
+
+function getButtons() {
+  cityArray.forEach((cityName) => {
+    console.log(cityName);
+    const cityButton = document.createElement('button');
+    cityButton.textContent = cityName;
+    cityButtonContainer.prepend(cityButton);
+  })
+}
+
+if (cityArray != []) {
+  getButtons();
+}
+
 
 // function to convert city input value to latitude and longitude via open weather map geo API and pass to fetchWeather function
 function getLatLon() {
