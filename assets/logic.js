@@ -1,11 +1,3 @@
-/*
-Improvement ideas:
-- add conditional if city input is blank, return
-- add a loading indicator when getting weather data
-- add limit when fetching data for faster loading
-- add state after city name in current weather card
-*/
-
 const key = "2f93013543aedabf89d7193f3daf51f3";
 let cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
 const cityButtonContainer = document.getElementById('city-button-container');
@@ -90,7 +82,7 @@ function createCurrentCard(currentWeather) {
 }
 
 function createForecastCards(weather) {
-  // get forecast header and add text
+  //add text to forecastHeader
   forecastHeader.textContent = '5-day Forecast';
   // create forecast cards
   const forecastCard = document.createElement('div');
